@@ -2,12 +2,14 @@
 $array = explode(',', $_GET['array']);
 
 // 修正はここから
-for ($i = 0; $i < count($array); $i++) {
-  for ($n = $i+1; $n < count($array); $n++) {
+$length = count($array);
+
+for ($i = 0; $i < $length; $i++) {
+  for ($n = $i + 1; $n < $length; $n++) {
     if ($array[$i] > $array[$n]) {
-      $ex = $array[$i];
+      $tmp = $array[$i];
       $array[$i] = $array[$n];
-      $array[$n] = $ex;
+      $array[$n] = $tmp;
     }
   }
 }
