@@ -20,7 +20,7 @@ while($number = $numbers->fetch()) {
   $num[$i] = $number['value'];
   $i++;
 }
-$length = $i;
+$length = count($num);
 
 // echo "<pre>";
 // for ($i = 0; $i <= $length; $i++) {
