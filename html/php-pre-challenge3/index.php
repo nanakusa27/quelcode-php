@@ -5,6 +5,11 @@ $dsn = 'mysql:dbname=test;host=mysql';
 $dbuser = 'test';
 $dbpassword = 'test';
 
+// 1以上の整数以外を400エラーで返す
+if (!($limit >= 1)) {
+    http_response_code(400);
+}
+
 // DB接続
 try {
   $db = new PDO($dsn, $dbuser, $dbpassword);
