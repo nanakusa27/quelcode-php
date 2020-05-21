@@ -160,5 +160,9 @@ for ($x = 0; $x < $comb_length; $x++) {
 // print_r($hit_comb);
 // echo"</pre>";
 
+if (is_null($hit_comb)) {
+    $hit_comb = [];
+}
+
 $json = json_encode($hit_comb);
 echo $json;
