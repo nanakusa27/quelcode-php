@@ -1,5 +1,5 @@
 <?php
-$limit = $_GET['target'];
+// $limit = $_GET['target'];
 
 $dsn = 'mysql:dbname=test;host=mysql';
 $dbuser = 'test';
@@ -25,10 +25,121 @@ while($number = $numbers->fetch()) {
   $num[$i] = $number['value'];
   $i++;
 }
-$length = count($num);
+$num_length = count($num);
 
 // echo "<pre>";
 // for ($i = 0; $i <= $length; $i++) {
 //   echo $num[$i] . "<br>";
 // }
 // echo "</pre>";
+
+// 組み合わせ列挙
+$take = 2;
+
+for ($i = 0; $i <= $num_length - $take; $i++) {
+    for ($j = $i + 1; $j < $num_length; $j++) {
+        $took[$comb_length] = [$num[$i], $num[$j]];
+        $comb_length++;
+    }
+}
+
+$take++;
+
+for ($i = 0; $i <= $num_length - $take; $i++) {
+    for ($j = $i + 1; $j < $num_length; $j++) {
+        for ($k = $j + 1; $k < $num_length; $k++) {
+            $took[$comb_length] = [$num[$i], $num[$j], $num[$k]];
+            $comb_length++;
+        }
+    }
+}
+
+$take++;
+
+for ($i = 0; $i <= $num_length - $take; $i++) {
+    for ($j = $i + 1; $j < $num_length; $j++) {
+        for ($k = $j + 1; $k < $num_length; $k++) {
+            for ($l = $k + 1; $l < $num_length; $l++) {
+                $took[$comb_length] = [$num[$i], $num[$j], $num[$k], $num[$l]];
+                $comb_length++;
+            }
+        }
+    }
+}
+
+$take++;
+
+for ($i = 0; $i <= $num_length - $take; $i++) {
+    for ($j = $i + 1; $j < $num_length; $j++) {
+        for ($k = $j + 1; $k < $num_length; $k++) {
+            for ($l = $k + 1; $l < $num_length; $l++) {
+                for ($m = $l + 1; $m < $num_length; $m++) {
+                    $took[$comb_length] = [$num[$i], $num[$j], $num[$k], $num[$l], $num[$m]];
+                    $comb_length++;
+                }
+            }
+        }
+    }
+}
+
+$take++;
+
+for ($i = 0; $i <= $num_length - $take; $i++) {
+    for ($j = $i + 1; $j < $num_length; $j++) {
+        for ($k = $j + 1; $k < $num_length; $k++) {
+            for ($l = $k + 1; $l < $num_length; $l++) {
+                for ($m = $l + 1; $m < $num_length; $m++) {
+                    for ($n = $m + 1; $n < $num_length; $n++) {
+                        $took[$comb_length] = [$num[$i], $num[$j], $num[$k], $num[$l], $num[$m], $num[$n]];
+                        $comb_length++;
+                    }
+                }
+            }
+        }
+    }
+}
+
+$take++;
+
+for ($i = 0; $i <= $num_length - $take; $i++) {
+    for ($j = $i + 1; $j < $num_length; $j++) {
+        for ($k = $j + 1; $k < $num_length; $k++) {
+            for ($l = $k + 1; $l < $num_length; $l++) {
+                for ($m = $l + 1; $m < $num_length; $m++) {
+                    for ($n = $m + 1; $n < $num_length; $n++) {
+                        for ($o = $n + 1; $o < $num_length; $o++) {
+                            $took[$comb_length] = [$num[$i], $num[$j], $num[$k], $num[$l], $num[$m], $num[$n], $num[$o]];
+                            $comb_length++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+$take++;
+
+for ($i = 0; $i <= $num_length - $take; $i++) {
+    for ($j = $i + 1; $j < $num_length; $j++) {
+        for ($k = $j + 1; $k < $num_length; $k++) {
+            for ($l = $k + 1; $l < $num_length; $l++) {
+                for ($m = $l + 1; $m < $num_length; $m++) {
+                    for ($n = $m + 1; $n < $num_length; $n++) {
+                        for ($o = $n + 1; $o < $num_length; $o++) {
+                            for ($p = $o + 1; $p < $num_length; $p++) {
+                                $took[$comb_length] = [$num[$i], $num[$j], $num[$k], $num[$l], $num[$m], $num[$n], $num[$o], $num[$p]];
+                                $comb_length++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+echo"<pre>";
+print_r($took);
+echo $comb_length;
+echo"</pre>";
