@@ -155,6 +155,9 @@ for ($x = 0; $x < $comb_length; $x++) {
     }
 }
 
-echo"<pre>";
-print_r($hit_comb);
-echo"</pre>";
+// echo"<pre>";
+// print_r($hit_comb);
+// echo"</pre>";
+
+$json = json_encode($hit_comb);
+echo $json;
