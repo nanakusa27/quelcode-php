@@ -1,5 +1,5 @@
 <?php
-// $limit = $_GET['target'];
+$limit = $_GET['target'];
 
 $dsn = 'mysql:dbname=test;host=mysql';
 $dbuser = 'test';
@@ -35,6 +35,7 @@ $num_length = count($num);
 
 // 組み合わせ列挙
 $take = 2;
+$comb_length = 0;
 
 for ($i = 0; $i <= $num_length - $take; $i++) {
     for ($j = $i + 1; $j < $num_length; $j++) {
@@ -146,9 +147,14 @@ for ($i = 0; $i <= $num_length - $take; $i++) {
 
 // 組み合わせ照合
 $y = 0;
+settype($limit, "integer");
 for ($x = 0; $x < $comb_length; $x++) {
     if ($limit === array_sum($took[$x])) {
         $hit_comb[$y] = $took[$x];
         $y++;
     }
 }
+
+echo"<pre>";
+print_r($hit_comb);
+echo"</pre>";
