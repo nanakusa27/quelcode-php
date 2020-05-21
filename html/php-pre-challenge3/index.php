@@ -8,6 +8,7 @@ $dbpassword = 'test';
 // 1以上の整数以外を400エラーで返す
 if (!($limit >= 1)) {
     http_response_code(400);
+    exit();
 }
 
 // DB接続
@@ -23,7 +24,7 @@ $numbers = $db->query('SELECT value FROM prechallenge3');
 
 for ($i = 0; $number = $numbers->fetch(); $i++) {
   // print($number['value']);
-  $num[$i] = $number['value'];
+  $num[$i] = (int)$number['value'];
 }
 $num_length = count($num);
 
