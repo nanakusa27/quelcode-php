@@ -17,13 +17,13 @@ try {
   echo 'DB接続エラー：' . $e->getMessage();
 }
 
+// 値取り出し
 $numbers = $db->query('SELECT value FROM prechallenge3');
 
-$i = 0;
-while($number = $numbers->fetch()) {
+
+for ($i = 0; $number = $numbers->fetch(); $i++) {
   // print($number['value']);
   $num[$i] = $number['value'];
-  $i++;
 }
 $num_length = count($num);
 
