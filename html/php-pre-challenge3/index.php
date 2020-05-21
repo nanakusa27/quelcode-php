@@ -139,7 +139,16 @@ for ($i = 0; $i <= $num_length - $take; $i++) {
     }
 }
 
-echo"<pre>";
-print_r($took);
-echo $comb_length;
-echo"</pre>";
+// echo"<pre>";
+// print_r($took);
+// echo $comb_length;
+// echo"</pre>";
+
+// 組み合わせ照合
+$y = 0;
+for ($x = 0; $x < $comb_length; $x++) {
+    if ($limit === array_sum($took[$x])) {
+        $hit_comb[$y] = $took[$x];
+        $y++;
+    }
+}
