@@ -5,7 +5,14 @@ $dsn = 'mysql:dbname=test;host=mysql';
 $dbuser = 'test';
 $dbpassword = 'test';
 
-// 例外処理、1以上の整数以外を400エラーで返す
+// 例外処理、整数以外を400エラーで返す
+if (!ctype_digit($limit)) {
+    http_response_code(400);
+    exit();
+}
+
+// 例外処理、１以上以外を400エラーで返す
+settype($limit, "integer");
 if (!($limit >= 1)) {
     http_response_code(400);
     exit();
@@ -64,7 +71,6 @@ foreach ($p as $comb) {
 }
 
 // 組み合わせ照合
-settype($limit, "integer");
 for ($x = 0; $x < $comb_cnt; $x++) {
     if ($limit === array_sum($combination[$x])) {
         $hit_comb[] = $combination[$x];
