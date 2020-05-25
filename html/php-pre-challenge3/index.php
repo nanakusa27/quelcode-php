@@ -5,7 +5,7 @@ $dsn = 'mysql:dbname=test;host=mysql';
 $dbuser = 'test';
 $dbpassword = 'test';
 
-// 1以上の整数以外を400エラーで返す
+// 例外処理、1以上の整数以外を400エラーで返す
 if (!($limit >= 1)) {
     http_response_code(400);
     exit();
@@ -34,116 +34,47 @@ $num_length = count($num);
 // echo "</pre>";
 
 // 組み合わせ列挙
-$take = 2;
-$comb_cnt = 0;
+function getCpattern($num, $take) {
+// 引数 $num：選択元要素の配列
+// 引数 $take：$num から異なる $take 個を選ぶ
 
-for ($i = 0; $i <= $num_length - $take; $i++) {
-    for ($j = $i + 1; $j < $num_length; $j++) {
-        $combination[$comb_cnt] = [$num[$i], $num[$j]];
-        $comb_cnt++;
-    }
+    $num_length = count($num);
+    return ptn($num, $num_length, array(), 0, $num_length - $take + 1);
 }
 
-$take++;
-
-for ($i = 0; $i <= $num_length - $take; $i++) {
-    for ($j = $i + 1; $j < $num_length; $j++) {
-        for ($k = $j + 1; $k < $num_length; $k++) {
-            $combination[$comb_cnt] = [$num[$i], $num[$j], $num[$k]];
-            $comb_cnt++;
+// ptn：内部で再帰的に呼び出される関数
+function ptn($num, $num_length, $subset, $begin, $end) {
+    $p = array();
+    for ($i = $begin; $i < $end; $i++) {
+        // print_r($num[$i] . ",");
+        $tmp = array_merge($subset, (array)$num[$i]);
+        // print_r($tmp);
+        if ($end + 1 <= $num_length) {
+            $p = array_merge($p, ptn($num, $num_length, $tmp, $i + 1, $end + 1));
+        } else {
+            array_push($p, $tmp);
         }
     }
+    return $p;
 }
 
-$take++;
-
-for ($i = 0; $i <= $num_length - $take; $i++) {
-    for ($j = $i + 1; $j < $num_length; $j++) {
-        for ($k = $j + 1; $k < $num_length; $k++) {
-            for ($l = $k + 1; $l < $num_length; $l++) {
-                $combination[$comb_cnt] = [$num[$i], $num[$j], $num[$k], $num[$l]];
-                $comb_cnt++;
-            }
-        }
-    }
-}
-
-$take++;
-
-for ($i = 0; $i <= $num_length - $take; $i++) {
-    for ($j = $i + 1; $j < $num_length; $j++) {
-        for ($k = $j + 1; $k < $num_length; $k++) {
-            for ($l = $k + 1; $l < $num_length; $l++) {
-                for ($m = $l + 1; $m < $num_length; $m++) {
-                    $combination[$comb_cnt] = [$num[$i], $num[$j], $num[$k], $num[$l], $num[$m]];
-                    $comb_cnt++;
-                }
-            }
-        }
-    }
-}
-
-$take++;
-
-for ($i = 0; $i <= $num_length - $take; $i++) {
-    for ($j = $i + 1; $j < $num_length; $j++) {
-        for ($k = $j + 1; $k < $num_length; $k++) {
-            for ($l = $k + 1; $l < $num_length; $l++) {
-                for ($m = $l + 1; $m < $num_length; $m++) {
-                    for ($n = $m + 1; $n < $num_length; $n++) {
-                        $combination[$comb_cnt] = [$num[$i], $num[$j], $num[$k], $num[$l], $num[$m], $num[$n]];
-                        $comb_cnt++;
-                    }
-                }
-            }
-        }
-    }
-}
-
-$take++;
-
-for ($i = 0; $i <= $num_length - $take; $i++) {
-    for ($j = $i + 1; $j < $num_length; $j++) {
-        for ($k = $j + 1; $k < $num_length; $k++) {
-            for ($l = $k + 1; $l < $num_length; $l++) {
-                for ($m = $l + 1; $m < $num_length; $m++) {
-                    for ($n = $m + 1; $n < $num_length; $n++) {
-                        for ($o = $n + 1; $o < $num_length; $o++) {
-                            $combination[$comb_cnt] = [$num[$i], $num[$j], $num[$k], $num[$l], $num[$m], $num[$n], $num[$o]];
-                            $comb_cnt++;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-$take++;
-
-for ($i = 0; $i <= $num_length - $take; $i++) {
-    for ($j = $i + 1; $j < $num_length; $j++) {
-        for ($k = $j + 1; $k < $num_length; $k++) {
-            for ($l = $k + 1; $l < $num_length; $l++) {
-                for ($m = $l + 1; $m < $num_length; $m++) {
-                    for ($n = $m + 1; $n < $num_length; $n++) {
-                        for ($o = $n + 1; $o < $num_length; $o++) {
-                            for ($p = $o + 1; $p < $num_length; $p++) {
-                                $combination[$comb_cnt] = [$num[$i], $num[$j], $num[$k], $num[$l], $num[$m], $num[$n], $num[$o], $num[$p]];
-                                $comb_cnt++;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+$p =array();
+for ($j = 2; $j <= count($num); $j++) {
+    array_push($p, getCpattern($num, $j));
 }
 
 // echo"<pre>";
-// print_r($combination);
-// echo $comb_cnt;
+// print_r($p);
 // echo"</pre>";
+
+// ２次元配列を一つの配列に組み合わせ列挙を入れ直す
+$comb_cnt = 0;
+foreach ($p as $comb) {
+    foreach ($comb as $c) {
+        $combination[$comb_cnt] = $c;
+        $comb_cnt++;
+    }
+}
 
 // 組み合わせ照合
 $y = 0;
@@ -159,9 +90,11 @@ for ($x = 0; $x < $comb_cnt; $x++) {
 // print_r($hit_comb);
 // echo"</pre>";
 
+// 例外処理、組み合わせが存在しない場合
 if (is_null($hit_comb)) {
     $hit_comb = [];
 }
 
+// jsonにエンコードし、出力
 $json = json_encode($hit_comb);
 echo $json;
