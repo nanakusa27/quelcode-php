@@ -12,13 +12,14 @@ if (isset($_SESSION['id'])) {
     $gd = unserialize($post['goods']);
 
     // 現在の状況を検査する
-    for ($i = 0; $i < count($gd); $i++) {
-        if ($_SESSION['id'] == $gd[$i]) {
-            $hit = 1;
-            break;
+    if (is_array($gd)) {
+        for ($i = 0; $i < count($gd); $i++) {
+            if ($_SESSION['id'] == $gd[$i]) {
+                $hit = 1;
+                break;
+            }
         }
     }
-
     if ($hit) {
         // goods(posts)からmember_idを削除
         unset($gd[$i]);
