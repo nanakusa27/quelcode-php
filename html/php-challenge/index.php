@@ -149,13 +149,36 @@ function makeLink($value)
 					if (empty($gd)) {
 						echo 0;
 					} else {
-						$t = count($gd);
-						echo $t;
+						echo count($gd);
 					}
 					?>
 					</p>
 
-					<a href=""><img src="images/リツイートアイコン.png" width="20" height="20" alt="リツイート"></a>
+					<p>
+					<?php
+					// リツイート表示選択
+					$rt = unserialize($post['retweets']);
+
+					// 現在の状況を検査する
+					if (in_array($_SESSION['id'], (array)$rt)) {
+						// みどりリツイートを表示
+					?>
+						<a href="retweet.php?id=<?php echo h($post['id']); ?>"><img src="images/green_retweet.png" width="20" height="20" alt="リツイート" /></a>
+					<?php
+					} else {
+						// ノーマルリツイートを表示
+					?>
+						<a href="retweet.php?id=<?php echo h($post['id']); ?>"><img src="images/リツイートアイコン.png" width="20" height="20" alt="リツイート" /></a>
+					<?php
+					}
+					// リツイートの隣にリツイートの数を表示
+					if (empty($rt)) {
+						echo 0;
+					} else {
+						echo count($rt);
+					}
+					?>
+					</p>
 				</div>
 			<?php
 			endforeach;
