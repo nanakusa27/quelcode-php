@@ -111,6 +111,24 @@ function makeLink($value)
 				<div class="msg">
 					<img src="member_picture/<?php echo h($post['picture']); ?>" width="48" height="48" alt="<?php echo h($post['name']); ?>" />
 					<p><?php echo makeLink(h($post['message'])); ?><span class="name">（<?php echo h($post['name']); ?>）</span>[<a href="index.php?res=<?php echo h($post['id']); ?>">Re</a>]</p>
+
+					<p class="day"><a href="view.php?id=<?php echo h($post['id']); ?>"><?php echo h($post['created']); ?></a>
+					<?php
+						if ($post['reply_post_id'] > 0) :
+							?>
+							<a href="view.php?id=<?php echo h($post['reply_post_id']); ?>">返信元のメッセージ</a>
+							<?php
+						endif;
+						?>
+						<?php
+						if ($_SESSION['id'] == $post['member_id']) :
+							?>
+							[<a href="delete.php?id=<?php echo h($post['id']); ?>" style="color: #F33;">削除</a>]
+							<?php
+						endif;
+						?>
+					</p>
+					<p>
 					<?php
 					// いいね表示選択
 					$gd = unserialize($post['goods']);
@@ -118,45 +136,26 @@ function makeLink($value)
 					// 現在の状況を検査する
 					if (in_array($_SESSION['id'], (array)$gd)) {
 						// ピンクいいねを表示
-						?>
-						<a href="good.php?id=<?php echo h($post['id']); ?>"><img src="images/ハートのマーク.png" width="20" height="20" alt="いいね"></a>
-						<?php
+					?>
+						<a href="good.php?id=<?php echo h($post['id']); ?>"><img src="images/ハートのマーク.png" width="20" height="20" alt="いいね" /></a>
+					<?php
 					} else {
 						// ノーマルいいねを表示
-						?>
-						<a href="good.php?id=<?php echo h($post['id']); ?>"><img src="images/ハートのマーク2.png" width="20" height="20" alt="いいね"></a>
-						<?php
-					}
 					?>
+						<a href="good.php?id=<?php echo h($post['id']); ?>"><img src="images/ハートのマーク2.png" width="20" height="20" alt="いいね" /></a>
 					<?php
+					}
 					// いいねの隣にいいねの数を表示
 					if (empty($gd)) {
-					?>
-						<p>0</p>
-					<?php
+						echo 0;
 					} else {
 						$t = count($gd);
-						echo "<p> $t </p>";
+						echo $t;
 					}
 					?>
-					<a href=""><img src="images/リツイートアイコン.png" width="20" height="20" alt="リツイート"></a>
-
-					<p class="day"><a href="view.php?id=<?php echo h($post['id']); ?>"><?php echo h($post['created']); ?></a>
-					<?php
-						if ($post['reply_post_id'] > 0) :
-							?>
-							<a href="view.php?id=<?php echo h($post['reply_post_id']); ?>">返信元のメッセージ</a>
-						<?php
-						endif;
-						?>
-						<?php
-						if ($_SESSION['id'] == $post['member_id']) :
-						?>
-							[<a href="delete.php?id=<?php echo h($post['id']); ?>" style="color: #F33;">削除</a>]
-						<?php
-						endif;
-						?>
 					</p>
+
+					<a href=""><img src="images/リツイートアイコン.png" width="20" height="20" alt="リツイート"></a>
 				</div>
 			<?php
 			endforeach;
