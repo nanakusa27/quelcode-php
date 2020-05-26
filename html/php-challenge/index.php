@@ -111,13 +111,41 @@ function makeLink($value)
 				<div class="msg">
 					<img src="member_picture/<?php echo h($post['picture']); ?>" width="48" height="48" alt="<?php echo h($post['name']); ?>" />
 					<p><?php echo makeLink(h($post['message'])); ?><span class="name">（<?php echo h($post['name']); ?>）</span>[<a href="index.php?res=<?php echo h($post['id']); ?>">Re</a>]</p>
-					<p class="day"><a href="view.php?id=<?php echo h($post['id']); ?>"><?php echo h($post['created']); ?></a>
-						<?php
-						if ($post['reply_post_id'] > 0) :
+					<?php
+					// いいね表示選択
+					$gd = unserialize($post['goods']);
+
+					// 現在の状況を検査する
+					if (in_array($_SESSION['id'], (array)$gd)) {
+						// ピンクいいねを表示
 						?>
-							<a href="view.php?id=<?php echo
-														h($post['reply_post_id']); ?>">
-								返信元のメッセージ</a>
+						<a href="good.php?id=<?php echo h($post['id']); ?>"><img src="images/ハートのマーク.png" width="20" height="20" alt="いいね"></a>
+						<?php
+					} else {
+						// ノーマルいいねを表示
+						?>
+						<a href="good.php?id=<?php echo h($post['id']); ?>"><img src="images/ハートのマーク2.png" width="20" height="20" alt="いいね"></a>
+						<?php
+					}
+					?>
+					<?php
+					// いいねの隣にいいねの数を表示
+					if (empty($gd)) {
+					?>
+						<p>0</p>
+					<?php
+					} else {
+						$t = count($gd);
+						echo "<p> $t </p>";
+					}
+					?>
+					<a href=""><img src="images/リツイートアイコン.png" width="20" height="20" alt="リツイート"></a>
+
+					<p class="day"><a href="view.php?id=<?php echo h($post['id']); ?>"><?php echo h($post['created']); ?></a>
+					<?php
+						if ($post['reply_post_id'] > 0) :
+							?>
+							<a href="view.php?id=<?php echo h($post['reply_post_id']); ?>">返信元のメッセージ</a>
 						<?php
 						endif;
 						?>
@@ -128,8 +156,6 @@ function makeLink($value)
 						<?php
 						endif;
 						?>
-						<a href=""><img src="images/ハートのマーク2.png" alt="いいね"></a>
-						<a href=""><img src="images/リツイートアイコン.png" alt="リツイート"></a>
 					</p>
 				</div>
 			<?php
