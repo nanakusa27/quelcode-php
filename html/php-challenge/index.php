@@ -107,8 +107,21 @@ function makeLink($value)
 
 			<?php
 			foreach ($posts as $post) :
+				if (!($post['src_tweet_id'] == 0)) {
+					$tmp_name = $post['name'];
+					$tmp_mem_id = $post['member_id'];
+					$ret = $db->prepare('SELECT m.name, m.picture, p.* FROM members m, posts p WHERE m.id=p.member_id AND p.id=?');
+					$ret->execute(array($post['src_tweet_id']));
+					$post = $ret->fetch();
+					$post['member_id'] = $tmp_mem_id;
+				}
 			?>
 				<div class="msg">
+					<?php if (!(is_null($tmp_name))) {
+						echo h($tmp_name) . 'さんがリツイートしました。';
+						unset($tmp_name);
+					}
+					?>
 					<img src="member_picture/<?php echo h($post['picture']); ?>" width="48" height="48" alt="<?php echo h($post['name']); ?>" />
 					<p><?php echo makeLink(h($post['message'])); ?><span class="name">（<?php echo h($post['name']); ?>）</span>[<a href="index.php?res=<?php echo h($post['id']); ?>">Re</a>]</p>
 

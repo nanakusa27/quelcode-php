@@ -24,22 +24,24 @@ if (isset($_SESSION['id'])) {
         // retweets(posts)からmember_idを削除
         unset($rt[$i]);
 
-        // retweetsテーブルからリツイート情報を削除する
-        $delete = $db->prepare('DELETE FROM retweets WHERE posts_id=? AND member_id=?');
+        // リツイートを削除する
+        $delete = $db->prepare('DELETE FROM posts WHERE src_tweet_id=? AND member_id=?');
         $delete->execute(array(
             $id,
             $_SESSION['id']
         ));
+
     } else {
         // retweets(posts)にmember_idを追加する
         $rt[] = $_SESSION['id'];
 
-        // retweetsテーブルにリツイート情報を記録する
-        $insert = $db->prepare('INSERT INTO retweets SET posts_id=?, created=NOW(), member_id=?');
-        $insert->execute(array(
-            $id,
-            $_SESSION['id']
-        ));
+        // リツイートを投稿する
+        $message = $db->prepare('INSERT INTO posts SET member_id=?, created=NOW(), src_tweet_id=?');
+		$message->execute(array(
+            $_SESSION['id'],
+            $id
+		));
+
     }
 
     $retweets = serialize($rt);
