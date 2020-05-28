@@ -26,6 +26,13 @@ if (isset($_SESSION['id'])) {
     } else {
         // retweets(posts)にmember_idを追加する
         $rt[] = $_SESSION['id'];
+
+        // retweetsテーブルにリツイート情報を記録する
+        $insert = $db->prepare('INSERT INTO retweets SET posts_id=?, created=NOW(), member_id=?');
+        $insert->execute(array(
+            $id,
+            $_SESSION['id']
+        ));
     }
 
     $retweets = serialize($rt);
