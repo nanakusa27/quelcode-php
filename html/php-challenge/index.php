@@ -107,6 +107,7 @@ function makeLink($value)
 
 			<?php
 			foreach ($posts as $post) :
+				$check_rt = $post['src_tweet_id'];
 				if (!($post['src_tweet_id'] == 0)) {
 					$tmp_name = $post['name'];
 					$tmp_mem_id = $post['member_id'];
@@ -136,7 +137,13 @@ function makeLink($value)
 						<?php
 						if ($_SESSION['id'] == $post['member_id']) :
 							?>
-							[<a href="delete.php?id=<?php echo h($post['id']); ?>" style="color: #F33;">削除</a>]
+							[<a
+							<?php if ($check_rt == 0) { ?>
+								href="delete.php?id=<?php echo h($post['id']); ?>"
+							<?php } else { ?>
+								href="retweet.php?id=<?php echo h($post['id']); ?>"
+							<?php } ?>
+								style="color: #F33;">削除</a>]
 							<?php
 						endif;
 						?>
@@ -170,7 +177,7 @@ function makeLink($value)
 					<p>
 					<?php
 					// リツイート表示選択
-					$rt = unserialize($post['retweets']);
+					$rt = unserialize($post['rt_mem_id']);
 
 					// 現在の状況を検査する
 					if (in_array($_SESSION['id'], (array)$rt)) {

@@ -9,7 +9,7 @@ if (isset($_SESSION['id'])) {
     $posts->execute(array($id));
     $post = $posts->fetch();
 
-    $rt = unserialize($post['retweets']);
+    $rt = unserialize($post['rt_mem_id']);
 
     // 現在の状況を検査する
     if (is_array($rt)) {
@@ -21,7 +21,7 @@ if (isset($_SESSION['id'])) {
         }
     }
     if ($hit) {
-        // retweets(posts)からmember_idを削除
+        // rt_mem_id(posts)からmember_idを削除
         unset($rt[$i]);
 
         // リツイートを削除する
@@ -32,7 +32,7 @@ if (isset($_SESSION['id'])) {
         ));
 
     } else {
-        // retweets(posts)にmember_idを追加する
+        // rt_mem_id(posts)にmember_idを追加する
         $rt[] = $_SESSION['id'];
 
         // リツイートを投稿する
@@ -44,10 +44,10 @@ if (isset($_SESSION['id'])) {
 
     }
 
-    $retweets = serialize($rt);
-    $update = $db->prepare('UPDATE posts SET retweets=? WHERE id=?');
+    $rt_mem_id = serialize($rt);
+    $update = $db->prepare('UPDATE posts SET rt_mem_id=? WHERE id=?');
     $update->execute(array(
-        $retweets,
+        $rt_mem_id,
         $id
     ));
 
