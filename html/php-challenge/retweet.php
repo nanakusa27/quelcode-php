@@ -37,7 +37,10 @@ if (isset($_SESSION['id'])) {
 
     $retweets = serialize($rt);
     $update = $db->prepare('UPDATE posts SET retweets=? WHERE id=?');
-    $update->execute(array($retweets, $id));
+    $update->execute(array(
+        $retweets,
+        $id
+    ));
 
 
 }
