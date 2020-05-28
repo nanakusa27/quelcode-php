@@ -23,6 +23,13 @@ if (isset($_SESSION['id'])) {
     if ($hit) {
         // retweets(posts)からmember_idを削除
         unset($rt[$i]);
+
+        // retweetsテーブルからリツイート情報を削除する
+        $delete = $db->prepare('DELETE FROM retweets WHERE posts_id=? AND member_id=?');
+        $delete->execute(array(
+            $id,
+            $_SESSION['id']
+        ));
     } else {
         // retweets(posts)にmember_idを追加する
         $rt[] = $_SESSION['id'];
