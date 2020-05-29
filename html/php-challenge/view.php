@@ -37,7 +37,10 @@ if ($post = $posts->fetch()):
     <p class="day"><?php echo htmlspecialchars($post['created'], ENT_QUOTES, 'UTF-8'); ?></p>
     <p>いいね
     <?php
-    echo (empty($gd)) ? 0 : count($gd);
+    $goods = $db->prepare('SELECT COUNT(*) FROM goods WHERE post_id=?');
+    $goods->execute(array($_REQUEST['id']));
+    $good = $goods->fetch();
+    echo $good[0];
     ?>
     リツイート
     <?php
