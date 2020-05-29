@@ -44,7 +44,7 @@ if ($post = $posts->fetch()):
     ?>
     リツイート
     <?php
-    echo $tmp_rt = (empty($gd)) ? 0 : count($rt);
+    echo $tmp_rt = (empty($rt)) ? 0 : count($rt);
     ?>
     </p>
     </div>
