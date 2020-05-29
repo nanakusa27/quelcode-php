@@ -151,7 +151,14 @@ function makeLink($value)
 					<p class="action">
 					<?php
 					// いいね表示選択
-					$gd = unserialize($post['goods']);
+					$goods = $db->prepare('SELECT * FROM goods WHERE post_id=?');
+					$goods->execute(array($post['id']));
+					$j = 0;
+					unset($gd);
+					foreach ($goods as $good) {
+						$gd[$j] = $good['member_id'];
+						$j++;
+					}
 
 					// 現在の状況を検査する
 					if (in_array($_SESSION['id'], (array)$gd)) {
@@ -166,7 +173,7 @@ function makeLink($value)
 					<?php
 					}
 					// いいねの隣にいいねの数を表示
-					echo (empty($gd)) ? 0 : count($gd);
+					echo $j;
 					?>
 					</p>
 

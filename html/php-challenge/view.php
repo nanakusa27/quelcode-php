@@ -30,7 +30,6 @@ $posts->execute(array($_REQUEST['id']));
   <p>&laquo;<a href="index.php">一覧にもどる</a></p>
 <?php
 if ($post = $posts->fetch()):
-  $gd = unserialize($post['goods']);
 ?>
     <div class="msg">
     <img src="member_picture/<?php echo htmlspecialchars($post['picture'], ENT_QUOTES, 'UTF-8'); ?>" width="48" height="48" alt="<?php echo htmlspecialchars($post['name'], ENT_QUOTES, 'UTF-8'); ?>" />
