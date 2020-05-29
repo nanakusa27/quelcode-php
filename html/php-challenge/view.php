@@ -31,7 +31,6 @@ $posts->execute(array($_REQUEST['id']));
 <?php
 if ($post = $posts->fetch()):
   $gd = unserialize($post['goods']);
-  $rt = unserialize($post['rt_mem_id']);
 ?>
     <div class="msg">
     <img src="member_picture/<?php echo htmlspecialchars($post['picture'], ENT_QUOTES, 'UTF-8'); ?>" width="48" height="48" alt="<?php echo htmlspecialchars($post['name'], ENT_QUOTES, 'UTF-8'); ?>" />
@@ -43,7 +42,10 @@ if ($post = $posts->fetch()):
     ?>
     リツイート
     <?php
-    echo (empty($rt)) ? 0 : count($rt);
+    $rts = $db->prepare('SELECT COUNT(*) FROM posts WHERE src_tweet_id=?');
+    $rts->execute(array($_REQUEST['id']));
+    $rt = $rts->fetch();
+    echo $rt[0];
     ?>
     </p>
     </div>
