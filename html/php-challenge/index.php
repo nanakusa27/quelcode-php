@@ -178,7 +178,7 @@ function makeLink($value)
 					$count_rt->execute(array($post['id']));
 					$cnt_rt = count($count_rt->fetch());
 					// 現在の状況を検査する
-					if (in_array($_SESSION['id'], (array)$rt)) {
+					if ($cnt_rt > 0) {
 						// みどりリツイートを表示
 					?>
 						<a href="retweet.php?id=<?php echo h($post['id']); ?>"><img src="images/green_retweet.png" alt="リツイート" /></a>
