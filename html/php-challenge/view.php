@@ -39,12 +39,11 @@ if ($post = $posts->fetch()):
     <p class="day"><?php echo htmlspecialchars($post['created'], ENT_QUOTES, 'UTF-8'); ?></p>
     <p>いいね
     <?php
-    $tmp_gd = (empty($gd)) ? 0 : count($gd);
-    echo $tmp_gd;
+    echo (empty($gd)) ? 0 : count($gd);
     ?>
     リツイート
     <?php
-    echo $tmp_rt = (empty($rt)) ? 0 : count($rt);
+    echo (empty($rt)) ? 0 : count($rt);
     ?>
     </p>
     </div>
