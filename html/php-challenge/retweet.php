@@ -15,7 +15,7 @@ if (isset($_SESSION['id'])) {
     $hit = 0;
     if (is_array($rt)) {
         for ($i = 0; $i < count($rt); $i++) {
-            if ($_SESSION['id'] == $rt[$i]) {
+            if ($_SESSION['id'] === $rt[$i]) {
                 $hit = 1;
                 break;
             }

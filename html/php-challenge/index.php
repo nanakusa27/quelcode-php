@@ -108,7 +108,7 @@ function makeLink($value)
 			<?php
 			foreach ($posts as $post) :
 				$check_rt = $post['src_tweet_id'];
-				if (!($post['src_tweet_id'] == 0)) {
+				if (!((int)$post['src_tweet_id'] === 0)) {
 					$tmp_name = $post['name'];
 					$tmp_mem_id = $post['member_id'];
 					$ret = $db->prepare('SELECT m.name, m.picture, p.* FROM members m, posts p WHERE m.id=p.member_id AND p.id=?');
@@ -135,10 +135,10 @@ function makeLink($value)
 						endif;
 						?>
 						<?php
-						if ($_SESSION['id'] == $post['member_id']) :
+						if ($_SESSION['id'] === $post['member_id']) :
 							?>
 							[<a
-							<?php if ($check_rt == 0) { ?>
+							<?php if ((int)$check_rt === 0) { ?>
 								href="delete.php?id=<?php echo h($post['id']); ?>"
 							<?php } else { ?>
 								href="retweet.php?id=<?php echo h($post['id']); ?>"
