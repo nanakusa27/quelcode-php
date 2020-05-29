@@ -13,8 +13,8 @@ if (isset($_SESSION['id'])) {
 
     // 現在の状況を検査する
     $hit = 0;
-    $rt_length = count($rt);
     if (is_array($rt)) {
+        $rt_length = count($rt);
         for ($i = 0; $i < $rt_length; $i++) {
             if ($_SESSION['id'] === $rt[$i]) {
                 $hit = 1;
