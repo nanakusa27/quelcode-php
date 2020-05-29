@@ -166,11 +166,7 @@ function makeLink($value)
 					<?php
 					}
 					// いいねの隣にいいねの数を表示
-					if (empty($gd)) {
-						echo 0;
-					} else {
-						echo count($gd);
-					}
+					echo (empty($gd)) ? 0 : count($gd);
 					?>
 					</p>
 
@@ -192,11 +188,7 @@ function makeLink($value)
 					<?php
 					}
 					// リツイートの隣にリツイートの数を表示
-					if (empty($rt)) {
-						echo 0;
-					} else {
-						echo count($rt);
-					}
+					echo (empty($rt)) ? 0 : count($rt);
 					?>
 					</p>
 				</div>
