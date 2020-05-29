@@ -3,38 +3,26 @@ session_start();
 require('dbconnect.php');
 
 if (isset($_SESSION['id'])) {
-    $id = $_REQUEST['id'];
 
-    $posts = $db->prepare('SELECT * FROM posts WHERE id=?');
-    $posts->execute(array($id));
-    $post = $posts->fetch();
+    $goods = $db->prepare('SELECT * FROM goods WHERE post_id=? AND member_id=?');
+    $goods->execute(array($_REQUEST['id'], $_SESSION['id']));
 
-    $gd = unserialize($post['goods']);
+    if ($good = $goods->fetch()) {
+        // いいね情報を削除する
+        $minus = $db->prepare('DELETE FROM goods WHERE post_id=? AND member_id=?');
+        $minus->execute(array(
+            $_REQUEST['id'],
+            $_SESSION['id']
+        ));
 
-    // 現在の状況を検査する
-    $hit = 0;
-    if (is_array($gd)) {
-        $gd_length = count($gd);
-        for ($i = 0; $i < $gd_length; $i++) {
-            if ($_SESSION['id'] === $gd[$i]) {
-                $hit = 1;
-                break;
-            }
-        }
-    }
-    if ($hit) {
-        // goods(posts)からmember_idを削除
-        unset($gd[$i]);
     } else {
-        // goods(posts)にmember_idを追加する
-        $gd[] = $_SESSION['id'];
+        // いいね情報を追加する
+        $plus = $db->prepare('INSERT INTO goods SET post_id=?, member_id=?');
+        $plus->execute(array(
+            $_REQUEST['id'],
+            $_SESSION['id']
+        ));
     }
-
-    $goods = serialize($gd);
-    $update = $db->prepare('UPDATE posts SET goods=? WHERE id=?');
-    $update->execute(array($goods, $id));
-
-
 }
 
 header('Location: index.php'); exit();
