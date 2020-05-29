@@ -16,6 +16,9 @@ CREATE TABLE `posts` (
       `reply_post_id` int(11) NOT NULL,
       `created` datetime NOT NULL,
       `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      `goods` text NOT NULL,
+      `rt_mem_id` text NOT NULL,
+      `src_tweet_id` int(11) NOT NULL,
       PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
