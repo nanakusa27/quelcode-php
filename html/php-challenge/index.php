@@ -173,8 +173,10 @@ function makeLink($value)
 					<p class="action">
 					<?php
 					// リツイート表示選択
-					$rt = unserialize($post['rt_mem_id']);
-
+					//リツイートの情報取得
+					$count_rt = $db->prepare('SELECT src_tweet_id FROM posts WHERE src_tweet_id=?');
+					$count_rt->execute(array($post['id']));
+					$cnt_rt = count($count_rt->fetch());
 					// 現在の状況を検査する
 					if (in_array($_SESSION['id'], (array)$rt)) {
 						// みどりリツイートを表示
@@ -188,7 +190,7 @@ function makeLink($value)
 					<?php
 					}
 					// リツイートの隣にリツイートの数を表示
-					echo (empty($rt)) ? 0 : count($rt);
+					echo $cnt_rt;
 					?>
 					</p>
 				</div>
