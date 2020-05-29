@@ -12,6 +12,7 @@ if (isset($_SESSION['id'])) {
     $rt = unserialize($post['rt_mem_id']);
 
     // 現在の状況を検査する
+    $hit = 0;
     if (is_array($rt)) {
         for ($i = 0; $i < count($rt); $i++) {
             if ($_SESSION['id'] == $rt[$i]) {

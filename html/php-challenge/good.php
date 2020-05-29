@@ -12,9 +12,10 @@ if (isset($_SESSION['id'])) {
     $gd = unserialize($post['goods']);
 
     // 現在の状況を検査する
+    $hit = 0;
     if (is_array($gd)) {
         for ($i = 0; $i < count($gd); $i++) {
-            if ($_SESSION['id'] == $gd[$i]) {
+            if ($_SESSION['id'] === $gd[$i]) {
                 $hit = 1;
                 break;
             }
