@@ -148,7 +148,7 @@ function makeLink($value)
 						endif;
 						?>
 					</p>
-					<p>
+					<p class="action">
 					<?php
 					// いいね表示選択
 					$gd = unserialize($post['goods']);
@@ -157,12 +157,12 @@ function makeLink($value)
 					if (in_array($_SESSION['id'], (array)$gd)) {
 						// ピンクいいねを表示
 					?>
-						<a href="good.php?id=<?php echo h($post['id']); ?>"><img src="images/ハートのマーク.png" width="20" height="20" alt="いいね" /></a>
+						<a href="good.php?id=<?php echo h($post['id']); ?>"><img src="images/ハートのマーク.png" alt="いいね" /></a>
 					<?php
 					} else {
 						// ノーマルいいねを表示
 					?>
-						<a href="good.php?id=<?php echo h($post['id']); ?>"><img src="images/ハートのマーク2.png" width="20" height="20" alt="いいね" /></a>
+						<a href="good.php?id=<?php echo h($post['id']); ?>"><img src="images/ハートのマーク2.png" alt="いいね" /></a>
 					<?php
 					}
 					// いいねの隣にいいねの数を表示
@@ -174,7 +174,7 @@ function makeLink($value)
 					?>
 					</p>
 
-					<p>
+					<p class="action">
 					<?php
 					// リツイート表示選択
 					$rt = unserialize($post['rt_mem_id']);
@@ -183,12 +183,12 @@ function makeLink($value)
 					if (in_array($_SESSION['id'], (array)$rt)) {
 						// みどりリツイートを表示
 					?>
-						<a href="retweet.php?id=<?php echo h($post['id']); ?>"><img src="images/green_retweet.png" width="20" height="20" alt="リツイート" /></a>
+						<a href="retweet.php?id=<?php echo h($post['id']); ?>"><img src="images/green_retweet.png" alt="リツイート" /></a>
 					<?php
 					} else {
 						// ノーマルリツイートを表示
 					?>
-						<a href="retweet.php?id=<?php echo h($post['id']); ?>"><img src="images/リツイートアイコン.png" width="20" height="20" alt="リツイート" /></a>
+						<a href="retweet.php?id=<?php echo h($post['id']); ?>"><img src="images/リツイートアイコン.png" alt="リツイート" /></a>
 					<?php
 					}
 					// リツイートの隣にリツイートの数を表示

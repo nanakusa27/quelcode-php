@@ -143,4 +143,10 @@ li {
 	font-size: 80%;
 	color: #999;
 }
-
+.action {
+	display: inline-block;
+}
+.action img {
+	width: 20px;
+	height: 20px;
+}
