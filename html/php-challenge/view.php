@@ -37,7 +37,16 @@ if ($post = $posts->fetch()):
     <img src="member_picture/<?php echo htmlspecialchars($post['picture'], ENT_QUOTES, 'UTF-8'); ?>" width="48" height="48" alt="<?php echo htmlspecialchars($post['name'], ENT_QUOTES, 'UTF-8'); ?>" />
     <p><?php echo htmlspecialchars($post['message'], ENT_QUOTES, 'UTF-8'); ?><span class="name">（<?php echo htmlspecialchars($post['name'], ENT_QUOTES, 'UTF-8'); ?>）</span></p>
     <p class="day"><?php echo htmlspecialchars($post['created'], ENT_QUOTES, 'UTF-8'); ?></p>
-    <p>いいね<?php echo count($gd); ?> リツイート<?php echo count($rt); ?></p>
+    <p>いいね
+    <?php
+    $tmp_gd = (empty($gd)) ? 0 : count($gd);
+    echo $tmp_gd;
+    ?>
+    リツイート
+    <?php
+    echo $tmp_rt = (empty($gd)) ? 0 : count($rt);
+    ?>
+    </p>
     </div>
 <?php
 else:
