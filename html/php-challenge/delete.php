@@ -17,6 +17,9 @@ if (isset($_SESSION['id'])) {
 			$id,
 			$id
 		));
+
+		$del_gd = $db->prepare('DELETE FROM goods WHERE post_id=?');
+		$del_gd->execute(array($id));
 	}
 }
 
