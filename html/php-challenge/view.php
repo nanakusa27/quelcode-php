@@ -30,6 +30,7 @@ $posts->execute(array($_REQUEST['id']));
   <p>&laquo;<a href="index.php">一覧にもどる</a></p>
 <?php
 if ($post = $posts->fetch()):
+  $id = (int)$_REQUEST['id'];
 ?>
     <div class="msg">
     <img src="member_picture/<?php echo htmlspecialchars($post['picture'], ENT_QUOTES, 'UTF-8'); ?>" width="48" height="48" alt="<?php echo htmlspecialchars($post['name'], ENT_QUOTES, 'UTF-8'); ?>" />
@@ -38,14 +39,14 @@ if ($post = $posts->fetch()):
     <p>いいね
     <?php
     $goods = $db->prepare('SELECT COUNT(*) FROM goods WHERE post_id=?');
-    $goods->execute(array($_REQUEST['id']));
+    $goods->execute(array($id));
     $good = $goods->fetch();
     echo $good[0];
     ?>
     リツイート
     <?php
     $rts = $db->prepare('SELECT COUNT(*) FROM posts WHERE src_tweet_id=?');
-    $rts->execute(array($_REQUEST['id']));
+    $rts->execute(array($id));
     $rt = $rts->fetch();
     echo $rt[0];
     ?>
