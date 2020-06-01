@@ -6,22 +6,20 @@ require('dbconnect.php');
 $post_id = (int)$_REQUEST['id'];
 
 // 実在するツイートidか確認
-$pid = [];
 $pid = $db->prepare('SELECT * FROM posts WHERE id=?');
-$pid->execute(array($_REQUEST['id']));
+$pid->execute(array($post_id));
 
-if (isset($_SESSION['id']) && is_int($post_id) && $pi = $pid->fetch()) {
+if (isset($_SESSION['id']) && is_int($post_id) && $pid->fetch()) {
 
-    $post = [];
     $posts = $db->prepare('SELECT * FROM posts WHERE src_tweet_id=? AND member_id=?');
-    $posts->execute(array($_REQUEST['id'], $_SESSION['id']));
+    $posts->execute(array($post_id, $_SESSION['id']));
 
     // 現在の状況を検査する
-    if ($post = $posts->fetch()) {
+    if ($posts->fetch()) {
         // リツイートを削除する
         $delete = $db->prepare('DELETE FROM posts WHERE src_tweet_id=? AND member_id=?');
         $delete->execute(array(
-            $_REQUEST['id'],
+            $post_id,
             $_SESSION['id']
         ));
 
@@ -30,11 +28,11 @@ if (isset($_SESSION['id']) && is_int($post_id) && $pi = $pid->fetch()) {
         $message = $db->prepare('INSERT INTO posts SET member_id=?, created=NOW(), src_tweet_id=?');
         $message->execute(array(
             $_SESSION['id'],
-            $_REQUEST['id']
+            $post_id
         ));
 
     }
 
 }
 
-header('Location: index.php'); exit();
+// header('Location: index.php'); exit();
