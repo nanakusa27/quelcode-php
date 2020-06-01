@@ -2,7 +2,15 @@
 session_start();
 require('dbconnect.php');
 
-if (isset($_SESSION['id'])) {
+// 送られてきたidの型を確認
+$post_id = (int)$_REQUEST['id'];
+
+// 実在するツイートidか確認
+$pid = [];
+$pid = $db->prepare('SELECT * FROM posts WHERE id=?');
+$pid->execute(array($_REQUEST['id']));
+
+if (isset($_SESSION['id']) && is_int($post_id) && $pi = $pid->fetch()) {
 
     $goods = $db->prepare('SELECT * FROM goods WHERE post_id=? AND member_id=?');
     $goods->execute(array($_REQUEST['id'], $_SESSION['id']));
