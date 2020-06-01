@@ -12,7 +12,10 @@ $pid->execute(array($post_id));
 if (isset($_SESSION['id']) && $pid->fetch()) {
 
     $goods = $db->prepare('SELECT * FROM goods WHERE post_id=? AND member_id=?');
-    $goods->execute(array($post_id, $_SESSION['id']));
+    $goods->execute(array(
+        $post_id,
+        $_SESSION['id']
+    ));
 
     if ($goods->fetch()) {
         // いいね情報を削除する

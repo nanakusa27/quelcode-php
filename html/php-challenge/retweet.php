@@ -11,16 +11,19 @@ $pid->execute(array($post_id));
 
 if (isset($_SESSION['id']) && $pid->fetch()) {
 
-    $posts = $db->prepare('SELECT * FROM posts WHERE src_tweet_id=? AND member_id=?');
-    $posts->execute(array($post_id, $_SESSION['id']));
+    $posts = $db->prepare('SELECT * FROM posts WHERE member_id=? AND src_tweet_id=?');
+    $posts->execute(array(
+        $_SESSION['id'],
+        $post_id
+    ));
 
     // 現在の状況を検査する
     if ($posts->fetch()) {
         // リツイートを削除する
-        $delete = $db->prepare('DELETE FROM posts WHERE src_tweet_id=? AND member_id=?');
+        $delete = $db->prepare('DELETE FROM posts WHERE member_id=? AND src_tweet_id=?');
         $delete->execute(array(
-            $post_id,
-            $_SESSION['id']
+            $_SESSION['id'],
+            $post_id
         ));
 
     } else {
@@ -35,4 +38,4 @@ if (isset($_SESSION['id']) && $pid->fetch()) {
 
 }
 
-// header('Location: index.php'); exit();
+header('Location: index.php'); exit();
