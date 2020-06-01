@@ -2,7 +2,7 @@
 session_start();
 require('dbconnect.php');
 
-$post_id = $_REQUEST['id'];
+$post_id = (int)$_REQUEST['id'];
 if (isset($_SESSION['id']) && is_int($post_id)) {
 
     $post = [];
