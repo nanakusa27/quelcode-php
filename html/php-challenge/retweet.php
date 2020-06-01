@@ -9,7 +9,7 @@ $post_id = (int)$_REQUEST['id'];
 $pid = $db->prepare('SELECT * FROM posts WHERE id=?');
 $pid->execute(array($post_id));
 
-if (isset($_SESSION['id']) && is_int($post_id) && $pid->fetch()) {
+if (isset($_SESSION['id']) && $pid->fetch()) {
 
     $posts = $db->prepare('SELECT * FROM posts WHERE src_tweet_id=? AND member_id=?');
     $posts->execute(array($post_id, $_SESSION['id']));

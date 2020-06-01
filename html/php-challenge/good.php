@@ -9,7 +9,7 @@ $post_id = (int)$_REQUEST['id'];
 $pid = $db->prepare('SELECT * FROM posts WHERE id=?');
 $pid->execute(array($post_id));
 
-if (isset($_SESSION['id']) && is_int($post_id) && $pid->fetch()) {
+if (isset($_SESSION['id']) && $pid->fetch()) {
 
     $goods = $db->prepare('SELECT * FROM goods WHERE post_id=? AND member_id=?');
     $goods->execute(array($post_id, $_SESSION['id']));
