@@ -2,7 +2,8 @@
 session_start();
 require('dbconnect.php');
 
-if (isset($_SESSION['id'])) {
+$post_id = $_REQUEST['id'];
+if (isset($_SESSION['id']) && is_int($post_id)) {
 
     $post = [];
     $posts = $db->prepare('SELECT * FROM posts WHERE src_tweet_id=? AND member_id=?');
